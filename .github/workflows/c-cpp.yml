@@ -10,7 +10,5 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Make all CC02
-        run:  | 
-          cd ./CC02
-          make all          
+      - name: What Where
+        run: ls -lh

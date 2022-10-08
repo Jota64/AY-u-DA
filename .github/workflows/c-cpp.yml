@@ -15,6 +15,6 @@ jobs:
     - uses: actions/checkout@v3
     - name: make all CC02
       run: |
-        make
+        make main
         make all
       working-directory: CC02

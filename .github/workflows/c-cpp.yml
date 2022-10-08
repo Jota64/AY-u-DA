@@ -8,7 +8,10 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: What Where
-        run: ls -lh
+    - uses: actions/checkout@v3
+    - name: make all
+      run: make

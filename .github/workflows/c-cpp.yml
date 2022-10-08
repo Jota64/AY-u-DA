@@ -8,10 +8,8 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - name: Make all CC02
         run: make all
-        working-directory: CC02
+        working-directory: CC02/

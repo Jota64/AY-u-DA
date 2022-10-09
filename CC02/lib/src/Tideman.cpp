@@ -20,31 +20,77 @@ const std::vector<std::vector<int>>& Tideman::get_preferences() const noexcept
 
 bool Tideman::vote(int rank, const std::string& name, OUT_PARAM std::vector<int>& ranks) const noexcept
 {
-  // TODO
-   switch (name)
-  {
-  case Hermione:
-    return true
-  case Ronald:
-    return true
-  case Harry:
-    return true
-  default:
-    return false
+  auto candidates = self.get_candidates();
+  for(int j=0; j < candidates.lenght; j++){
+    if(name == candidates[j]){
+      ranks.push_back(j)
+      return true;
+    }
   }
-  //throw NoImplementedException{};
+  return false;
 }
 
 void Tideman::record_preferences(const std::vector<int>& ranks) noexcept
 {
-  // TODO
-  throw NoImplementedException{};
+  // [a,b,c] >> [a,b] >> [b,c] >> [b,c]
+  for(int i=0; i < ranks.length-1 ; i++){
+	  for(int j=i+1; j < ranks.length ; j++){
+      win = ranks[i]
+      lose = ranks[j]
+
+      pref_matrix[win][lose] += 1 ;
+    }
+  }
 }
 
 std::vector<std::pair<int, int>> Tideman::create_pairs() const noexcept
 {
-  // TODO
-  throw NoImplementedException{};
+  /*
+  Este método debe crear y retornar una lista de pares (first, second) 
+  que indicará que el candidato first es preferido sobre el candidato second. 
+  Si hay empate entre ambos candidatos, 
+    entonces no se agrega a la lista. 
+  Cuidado con agregar valores repetidos. 
+  Para esto podrías considerar mirar, 
+  por cada índice de candidato,
+      todos los mayores a este
+      y si el candidato i es preferido sobre j,
+          entonces agregar el par (i, j) 
+      si el j es preferido sobre el i, 
+          entonces agregas el par (j, i). 
+      Para comparar, podrías evaluar y comparar los valores 
+      en la matriz en [i][j] y [j][i]. 
+      
+  La lista que retornes deberá estar ordenada de forma decreciente por preferencia de los pares 
+  (first, second) dados en la matriz de preferencias.
+  */
+  auto results = std::vector<std::pair<int, int>>(self.get_candidates().length)
+  auto pref_matrix  = self.get_preferences()
+  for(int i=0; i < self.get_candidates().length; i++){
+    for(int j=0; j < self.get_candidates().length; j++){
+      points_of_a_over_b = pref_matrix[i][j]
+      points_of_b_over_a = pref_matrix[j][i]
+      if(points_of_a_over_b > points_of_b_over_a){
+        auto score_pair = std::pair<int, int>(i,j)
+        if( std::find(results.begin(), results.end(), score_pair == results.end() ){
+          // If we do not find the pair <Get to the end of the array with find()>, do pushback
+          results.push_back( score_pair )
+        }
+        
+      }
+      else if(points_of_b_over_a > points_of_a_over_b){
+        auto score_pair = std::pair<int, int>(j,i)
+        if( std::find(results.begin(), results.end(), score_pair == results.end() ){ 
+          // If we do not find the pair <Get to the end of the array with find()>, do pushback
+          results.push_back( score_pair )
+        }
+      }
+      else{
+        continue // if points are equal, do nothing
+      }
+    }
+  }
+  return results
 }
 
 std::vector<std::vector<bool>> Tideman::lock_pairs(const std::vector<std::pair<int, int>>& pairs, size_t num_candidates) noexcept

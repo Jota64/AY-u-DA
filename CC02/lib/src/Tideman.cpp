@@ -23,7 +23,7 @@ bool Tideman::vote(int rank, const std::string& name, OUT_PARAM std::vector<int>
   auto candidates = self.get_candidates();
   for(int j=0; j < candidates.lenght; j++){
     if(name == candidates[j]){
-      ranks.push_back(j)
+      ranks[rank] = j ;
       return true;
     }
   }

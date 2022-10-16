@@ -35,11 +35,13 @@ bool Tideman::vote(int rank, const std::string &name, OUT_PARAM std::vector<int>
 void Tideman::record_preferences(const std::vector<int> &ranks) noexcept
 {
   // [a,b,c] >> [a,b] >> [b,c] >> [b,c]
+  auto pref_matrix = this.get_preferences();
   for (int i = 0; i < ranks.size() - 1; i++)
   {
     for (int j = i + 1; j < ranks.size(); j++)
     {
-      win = ranks[i] lose = ranks[j];
+      int win = ranks[i];
+      int lose = ranks[j];
       pref_matrix[win][lose] += 1;
     }
   }
@@ -67,12 +69,13 @@ std::vector<std::pair<int, int>> Tideman::create_pairs() const noexcept
   (first, second) dados en la matriz de preferencias.
   */
   auto results = std::vector<std::pair<int, int>>(this.get_candidates().size());
-  auto pref_matrix = self.get_preferences();
+  auto pref_matrix = this.get_preferences();
   for (int i = 0; i < this.get_candidates().size(); i++)
   {
     for (int j = 0; j < this.get_candidates().size(); j++)
     {
-      points_of_a_over_b = pref_matrix[i][j] points_of_b_over_a = pref_matrix[j][i];
+      auto points_of_a_over_b = pref_matrix[i][j];
+      auto points_of_b_over_a = pref_matrix[j][i];
       if (points_of_a_over_b > points_of_b_over_a)
       {
         auto score_pair = std::pair<int, int>(i, j);
@@ -83,7 +86,7 @@ std::vector<std::pair<int, int>> Tideman::create_pairs() const noexcept
       }
       else if (points_of_b_over_a > points_of_a_over_b)
       {
-        auto score_pair = std::pair<int, int>(j,i)
+        auto score_pair = std::pair<int, int>(j, i);
         if( std::find(results.begin(), results.end(), score_pair == results.end() ){
           // If we do not find the pair <Get to the end of the array with find()>, do pushback
           results.push_back(score_pair);

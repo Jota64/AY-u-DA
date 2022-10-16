@@ -7,10 +7,18 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  build-CC01:
     runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: make all CC01
+      run: |
+        make main
+        make all
+      working-directory: CC01
 
+  build-CC02:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: make all CC02
@@ -18,3 +26,30 @@ jobs:
         make main
         make all
       working-directory: CC02
+  build-CC03:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: make all CC03
+      run: |
+        make main
+        make all
+      working-directory: CC03
+  build-CC04:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: make all CC04
+      run: |
+        make main
+        make all
+      working-directory: CC04
+  build-CC05:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: make all CC05
+      run: |
+        make main
+        make all
+      working-directory: CC05
